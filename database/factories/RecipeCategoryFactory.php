@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Ingredient;
+use App\RecipeCategory;
 use Faker\Generator as Faker;
 
-$factory->define(Ingredient::class, function (Faker $faker) {
+$factory->define(RecipeCategory::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->text,

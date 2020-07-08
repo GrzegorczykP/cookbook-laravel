@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\RecipeIngredient;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class RecipeIngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //
     }
 
     /**
@@ -29,7 +30,7 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,10 +41,10 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param \App\RecipeIngredient $recipeIngredient
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(RecipeIngredient $recipeIngredient)
     {
         //
     }
@@ -51,10 +52,10 @@ class HomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param \App\RecipeIngredient $recipeIngredient
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(RecipeIngredient $recipeIngredient)
     {
         //
     }
@@ -62,11 +63,11 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param \App\RecipeIngredient $recipeIngredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, RecipeIngredient $recipeIngredient)
     {
         //
     }
@@ -74,10 +75,10 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param \App\RecipeIngredient $recipeIngredient
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(RecipeIngredient $recipeIngredient)
     {
         //
     }

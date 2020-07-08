@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\RecipeStep;
+use App\RecipeCategory;
 use Illuminate\Http\Request;
 
-class RecipeStepController extends Controller
+class RecipeCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class RecipeStepController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\RecipeStep $recipeStep
+     * @param \App\RecipeCategory $recipeCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(RecipeStep $recipeStep)
+    public function show(RecipeCategory $recipeCategory)
     {
         //
     }
@@ -52,10 +52,10 @@ class RecipeStepController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\RecipeStep $recipeStep
+     * @param \App\RecipeCategory $recipeCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(RecipeStep $recipeStep)
+    public function edit(RecipeCategory $recipeCategory)
     {
         //
     }
@@ -64,10 +64,10 @@ class RecipeStepController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\RecipeStep $recipeStep
+     * @param \App\RecipeCategory $recipeCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RecipeStep $recipeStep)
+    public function update(Request $request, RecipeCategory $recipeCategory)
     {
         //
     }
@@ -75,10 +75,10 @@ class RecipeStepController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\RecipeStep $recipeStep
+     * @param \App\RecipeCategory $recipeCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RecipeStep $recipeStep)
+    public function destroy(RecipeCategory $recipeCategory)
     {
         //
     }

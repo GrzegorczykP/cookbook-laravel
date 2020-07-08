@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRecipeStepsTable extends Migration
+class CreateRecipeCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateRecipeStepsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_steps', function (Blueprint $table) {
+        Schema::create('recipe_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->string('picture')
+                ->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateRecipeStepsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_steps');
+        Schema::dropIfExists('recipe_categories');
     }
 }

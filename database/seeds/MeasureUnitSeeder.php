@@ -11,6 +11,6 @@ class MeasureUnitSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(\App\MeasureUnit::class, 10)->create();
     }
 }

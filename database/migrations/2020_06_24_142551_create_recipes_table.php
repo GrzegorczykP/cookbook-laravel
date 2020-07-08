@@ -15,8 +15,24 @@ class CreateRecipesTable extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->string('picture')
+                ->nullable();
+            $table->foreignId('recipe_category_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->unsignedSmallInteger('prepare_time');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->enum('difficulty', ['easy', 'medium', 'hard']);
+            $table->unsignedTinyInteger('serves');
+            $table->boolean('verified')
+                ->default(false);
             $table->timestamps();
         });
+
     }
 
     /**

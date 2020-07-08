@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(MeasureUnit::class, function (Faker $faker) {
     return [
-        //
+        'name' => $faker->word
     ];
 });
