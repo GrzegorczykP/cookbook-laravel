@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RecipeIngredient whereRecipeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\RecipeIngredient whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Ingredient $ingredient
+ * @property-read \App\MeasureUnit $measure_unit
  */
 class RecipeIngredient extends Model
 {

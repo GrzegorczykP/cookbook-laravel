@@ -35,6 +35,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $ingredients_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\RecipeStep[] $steps
  * @property-read int|null $steps_count
+ * @property int $recipe_category_id
+ * @property int $verified
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\RecipeIngredient[] $recipeIngredients
+ * @property-read int|null $recipe_ingredients_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Recipe whereRecipeCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Recipe whereVerified($value)
  */
 class Recipe extends Model
 {
