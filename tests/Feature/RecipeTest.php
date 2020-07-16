@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class RecipeTest extends TestCase
@@ -11,10 +13,11 @@ class RecipeTest extends TestCase
      *
      * @return void
      */
-    public function testAddingRecipe()
+    public function testAddingRecipeByUser()
     {
-        $response = $this->get('/');
+        $user = factory(User::class)->create();
+        $user->assignRole('user');
 
-        $response->assertStatus(200);
+        $response = $this->post(route('recipes.store'));
     }
 }

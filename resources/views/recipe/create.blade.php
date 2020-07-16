@@ -17,6 +17,10 @@
             {{ Form::label('category', 'Kategoria: ') }}
             {{ Form::select('category', \App\RecipeCategory::all()->pluck('name', 'id'), old('category'), ['class' => 'form-control']) }}
         </div>
+        <div class="form-group">
+            <ingredient-picker :ingredients-list='{{\App\Ingredient::all()}}'
+                               :units-list='{{\App\MeasureUnit::all()}}'></ingredient-picker>
+        </div>
         {{ Form::submit('Dodaj przepis', ['class' => 'btn btn-primary']) }}
         {{ Form::close() }}
     </div>
