@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('ingredient-picker', require('./components/IngredientPicker.vue').default);
+Vue.component('step-editor', require('./components/StepEditor').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

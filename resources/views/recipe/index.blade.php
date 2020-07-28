@@ -2,7 +2,7 @@
 
 @section('content')
     <h2 class="my-2">Przepisy - {{$categoryName}}</h2>
-    <div class="row justify-content-center">
+    <div class="justify-content-center">
         @can('create recipe')
             <a class="btn btn-primary my-1" href="{{route('recipes.create')}}">Utwórz przepis</a>
         @endcan
@@ -27,7 +27,8 @@
             <tbody>
             @foreach ($recipes as $recipe)
                 <tr>
-                    <td>{{ $recipe->picture }}</td>
+                    <td>@if(!is_null($recipe->picture))<img src="{{ asset('storage/'.$recipe->picture) }}" alt="zdjęcie"
+                                                            width="64" height="64">@endif</td>
                     <td><a href="{{route('recipes.show', $recipe->id)}}">{{ $recipe->name }}</a></td>
                     <td>{{ $recipe->description }}</td>
                     <td>{{ $recipe->prepare_time }}</td>
@@ -52,5 +53,5 @@
         </table>
     </div>
 
-    {{ $recipes->links() }}
+    {{ $recipes->render() }}
 @endsection

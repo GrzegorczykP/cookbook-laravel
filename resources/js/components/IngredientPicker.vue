@@ -10,23 +10,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(ingredient, index) in ingredients">
+            <tr v-for="(ingredient, key) in ingredients">
                 <td>
                     <label>
-                        <input class="form-control" min="1" name="ingredients[][quantity]" required
+                        <input class="form-control" min="1" name="ingredients[][quantity]"
                                type="number" v-model="ingredient.quantity">
                     </label>
                 </td>
                 <td>
                     <label>
-                        <select class="form-control" name="ingredients[][unit]" required v-model="ingredient.unitId">
+                        <select class="form-control" name="ingredients[][unit]" v-model="ingredient.unitId">
                             <option :value="unit.id" v-for="unit in unitsList">{{unit.name}}</option>
                         </select>
                     </label>
                 </td>
                 <td>
                     <label>
-                        <select class="form-control" name="ingredients[][ingredient]" required
+                        <select class="form-control" name="ingredients[][ingredient]"
                                 v-model="ingredient.ingredientId">
                             <option :value="ingredient.id" v-for="ingredient in ingredientsList">{{ingredient.name}}
                             </option>
@@ -34,7 +34,7 @@
                     </label>
                 </td>
                 <td>
-                    <button @click="removeIngredient(index)" class="btn btn-danger">-</button>
+                    <button @click="removeIngredient(key)" class="btn btn-danger">-</button>
                 </td>
             </tr>
             </tbody>
@@ -52,7 +52,6 @@
         data() {
             return {
                 ingredients: [{
-                    index: 0,
                     quantity: 0,
                     ingredientId: null,
                     unitId: null,
@@ -61,9 +60,7 @@
         },
         methods: {
             addIngredient() {
-                let index = this.ingredients.length;
                 this.ingredients.push({
-                    index: index,
                     quantity: 0,
                     ingredientId: null,
                     unitId: null,

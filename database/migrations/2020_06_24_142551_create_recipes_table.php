@@ -1,5 +1,6 @@
 <?php
 
+use App\Recipe;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -26,7 +27,7 @@ class CreateRecipesTable extends Migration
             $table->foreignId('user_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->enum('difficulty', ['easy', 'medium', 'hard']);
+            $table->enum('difficulty', array_keys(Recipe::DIFFICULTY));
             $table->unsignedTinyInteger('serves');
             $table->boolean('verified')
                 ->default(false);
