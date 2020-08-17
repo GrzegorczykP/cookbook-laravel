@@ -17,6 +17,8 @@ class StoreRecipeRequest extends FormRequest
      */
     public function authorize()
     {
+//        dd($this->request);
+
         return true;
     }
 
@@ -28,7 +30,7 @@ class StoreRecipeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha',
+            'name' => 'required|regex:/^[a-zA-Z\s]+$/',
             'description' => 'required|string',
             'picture' => 'image|nullable',
             'recipe_category_id' => ['bail', 'required', Rule::in(RecipeCategory::all()->pluck('id'))],
@@ -36,7 +38,7 @@ class StoreRecipeRequest extends FormRequest
             'difficulty' => 'required|in:easy,medium,hard',
             'serves' => 'required|numeric|min:1|max:16',
             'steps' => 'array',
-            'steps.*.instructions' => 'required|string',
+            'steps.*.instruction' => 'required|string',
             'steps.*.picture' => 'nullable|image',
             'ingredients' => 'array',
             'ingredients.*.quantity' => 'required|numeric|min:1',

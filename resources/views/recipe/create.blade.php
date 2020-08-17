@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    {{--    {{dd(old('ingredients'))}}--}}
+
     <h2 class="my-2">Nowy przepis</h2>
     <div class="justify-content-center">
         @if ($errors->any())
@@ -20,14 +22,14 @@
                 {{ Form::label('name', 'Nazwa dania: ') }}
                 {{ Form::text('name', old('name'), ['class' => 'form-control']) }}
                 @error('name')
-                <p>{{ $message }}</p>
+                <p class=" alert alert-danger">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group col-md-6">
                 {{ Form::label('recipe_category_id', 'Kategoria: ') }}
                 {{ Form::select('recipe_category_id', \App\RecipeCategory::all()->pluck('name', 'id'), old('recipe_category_id'), ['class' => 'form-control']) }}
                 @error('recipe_category_id')
-                <p>{{ $message }}</p>
+                <p class=" alert alert-danger">{{ $message }}</p>
                 @enderror
             </div>
         </div>
@@ -36,7 +38,7 @@
             {{ Form::label('description', 'Opis: ') }}
             {{ Form::textarea('description', old('description'), ['class' => 'form-control']) }}
             @error('description')
-            <p>{{ $message }}</p>
+            <p class=" alert alert-danger">{{ $message }}</p>
             @enderror
         </div>
 
@@ -45,28 +47,28 @@
                 {{ Form::label('prepare_time', 'Czas przygotowania: ') }}
                 {{ Form::number('prepare_time', old('prepare_time'), ['class' => 'form-control']) }}
                 @error('prepare_time')
-                <p>{{ $message }}</p>
+                <p class=" alert alert-danger">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group col-md-3 col-sm-6">
                 {{ Form::label('serves', 'Porcje: ') }}
                 {{ Form::number('serves', old('serves'), ['class' => 'form-control']) }}
                 @error('serves')
-                <p>{{ $message }}</p>
+                <p class=" alert alert-danger">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group col-md-3 col-sm-6">
                 {{ Form::label('difficulty', 'Trudność: ') }}
                 {{ Form::select('difficulty', \App\Recipe::DIFFICULTY, old('difficulty'), ['class' => 'form-control']) }}
                 @error('difficulty')
-                <p>{{ $message }}</p>
+                <p class=" alert alert-danger">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group col-md-3 col-sm-6">
                 {{ Form::label('picture', 'Zdjęcie: ') }}
                 {{ Form::file('picture', ['class' => 'form-control-file', 'accept' => 'image/jpeg, image/jpg, image/png']) }}
                 @error('picture')
-                <p>{{ $message }}</p>
+                <p class=" alert alert-danger">{{ $message }}</p>
                 @enderror
             </div>
         </div>
@@ -75,18 +77,23 @@
             <div class="col-4">
                 <div class="form-group">
                     @error('ingredients.*')
-                    <p>{{ $message }}</p>
+                    <p class=" alert alert-danger">{{ $message }}</p>
                     @enderror
                     <ingredient-picker :ingredients-list='{{\App\Ingredient::all()}}'
-                                       :units-list='{{\App\MeasureUnit::all()}}'></ingredient-picker>
+                                       :units-list='{{\App\MeasureUnit::all()}}'
+                                       @if (old('ingredients'))
+                                       :ingredients-old="{{collect(old('ingredients'))}}"@endif>
+                    </ingredient-picker>
                 </div>
             </div>
             <div class="col-8">
                 <div class="form-group">
                     @error('steps.*')
-                    <p>{{ $message }}</p>
+                    <p class=" alert alert-danger">{{ $message }}</p>
                     @enderror
-                    <step-editor></step-editor>
+                    <step-editor @if (old('steps'))
+                                 :steps-old="{{collect(old('steps'))}}"@endif>
+                    </step-editor>
                 </div>
             </div>
         </div>

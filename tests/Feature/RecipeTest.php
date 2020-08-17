@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Ingredient;
 use App\Recipe;
+use App\RecipeIngredient;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -24,7 +26,7 @@ class RecipeTest extends TestCase
     {
         $user = $this->getUserByRoles('user');
 
-        $recipe = factory(Recipe::class)->make();
+        $recipe = factory(Recipe::class)->make(['user_id' => $user->id]);
         $response = $this->actingAs($user)->post(route('recipes.store'), $recipe->toArray());
 
         $response->assertCreated();
@@ -52,7 +54,7 @@ class RecipeTest extends TestCase
     {
         $user = $this->getUserByRoles('user');
 
-        $recipe = factory(Recipe::class)->make();
+        $recipe = factory(Recipe::class)->make(['user_id' => $user->id]);
         $file = UploadedFile::fake()->image('image.jpg')->size(1000);
         $recipe->picture = $file;
 
@@ -60,6 +62,15 @@ class RecipeTest extends TestCase
 
         Storage::disk('public')->assertExists('recipes-pic/' . $file->hashName());
         $this->assertDatabaseHas('recipes', ['picture' => 'recipes-pic/' . $file->hashName()]);
+    }
+
+    public function testIngredientsAreAddedToRecipe()
+    {
+        $user = $this->getUserByRoles('user');
+
+        $recipe = factory(Recipe::class)->make(['user_id' => $user->id]);
+        $ingredients = factory(RecipeIngredient::class, rand(1, 6))->make();
+        dd($ingredients);
     }
 
     /**

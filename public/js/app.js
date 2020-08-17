@@ -2067,23 +2067,29 @@
         __webpack_exports__["default"] = ({
             props: {
                 ingredientsList: Array,
-                unitsList: Array
+                unitsList: Array,
+                ingredientsOld: {
+                    type: Array,
+                    "default": function _default() {
+                        return [{
+                            quantity: 0,
+                            ingredient: null,
+                            unit: null
+                        }];
+                    }
+                }
             },
             data: function data() {
                 return {
-                    ingredients: [{
-                        quantity: 0,
-                        ingredientId: null,
-                        unitId: null
-                    }]
+                    ingredients: this.ingredientsOld
                 };
             },
             methods: {
                 addIngredient: function addIngredient() {
                     this.ingredients.push({
                         quantity: 0,
-                        ingredientId: null,
-                        unitId: null
+                        ingredient: null,
+                        unit: null
                     });
                 },
                 removeIngredient: function removeIngredient(key) {
@@ -2142,12 +2148,20 @@
 //
         /* harmony default export */
         __webpack_exports__["default"] = ({
+            props: {
+                stepsOld: {
+                    type: Array,
+                    "default": function _default() {
+                        return [{
+                            instruction: '',
+                            picture: null
+                        }];
+                    }
+                }
+            },
             data: function data() {
                 return {
-                    steps: [{
-                        instruction: '',
-                        picture: null
-                    }]
+                    steps: this.stepsOld
                 };
             },
             methods: {
@@ -10745,6 +10759,8 @@
             }
 
 
+
+
 // Multifunctional method to get and set values of a collection
 // The value/s can optionally be executed if it's a function
             var access = function (elems, fn, key, value, chainable, emptyGet, raw) {
@@ -15204,6 +15220,8 @@
             });
 
 
+
+
 // Return jQuery for attributes-only inclusion
 
 
@@ -16710,6 +16728,8 @@
             });
 
 
+
+
 // Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
             jQuery.ajaxPrefilter(function (s) {
                 if (s.crossDomain) {
@@ -16867,6 +16887,8 @@
                     return "script";
                 }
             });
+
+
 
 
 // Support: Safari 8 only
@@ -17322,6 +17344,8 @@
                 });
 
 
+
+
 // Support: Android <=4.0 only
 // Make sure we trim BOM and NBSP
             var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
@@ -17393,6 +17417,7 @@
                     "" :
                     (text + "").replace(rtrim, "");
             };
+
 
 
 // Register as a named AMD module, since jQuery can be concatenated with other
@@ -37793,7 +37818,7 @@
                                             staticClass: "form-control",
                                             attrs: {
                                                 min: "1",
-                                                name: "ingredients[][quantity]",
+                                                name: "ingredients[" + key + "][quantity]",
                                                 type: "number"
                                             },
                                             domProps: {value: ingredient.quantity},
@@ -37818,12 +37843,12 @@
                                                     {
                                                         name: "model",
                                                         rawName: "v-model",
-                                                        value: ingredient.unitId,
-                                                        expression: "ingredient.unitId"
+                                                        value: ingredient.unit,
+                                                        expression: "ingredient.unit"
                                                     }
                                                 ],
                                                 staticClass: "form-control",
-                                                attrs: {name: "ingredients[][unit]"},
+                                                attrs: {name: "ingredients[" + key + "][unit]"},
                                                 on: {
                                                     change: function ($event) {
                                                         var $$selectedVal = Array.prototype.filter
@@ -37836,7 +37861,7 @@
                                                             })
                                                         _vm.$set(
                                                             ingredient,
-                                                            "unitId",
+                                                            "unit",
                                                             $event.target.multiple
                                                                 ? $$selectedVal
                                                                 : $$selectedVal[0]
@@ -37863,12 +37888,12 @@
                                                     {
                                                         name: "model",
                                                         rawName: "v-model",
-                                                        value: ingredient.ingredientId,
-                                                        expression: "ingredient.ingredientId"
+                                                        value: ingredient.ingredient,
+                                                        expression: "ingredient.ingredient"
                                                     }
                                                 ],
                                                 staticClass: "form-control",
-                                                attrs: {name: "ingredients[][ingredient]"},
+                                                attrs: {name: "ingredients[" + key + "][ingredient]"},
                                                 on: {
                                                     change: function ($event) {
                                                         var $$selectedVal = Array.prototype.filter
@@ -37881,7 +37906,7 @@
                                                             })
                                                         _vm.$set(
                                                             ingredient,
-                                                            "ingredientId",
+                                                            "ingredient",
                                                             $event.target.multiple
                                                                 ? $$selectedVal
                                                                 : $$selectedVal[0]
@@ -37912,6 +37937,7 @@
                                             staticClass: "btn btn-danger",
                                             on: {
                                                 click: function ($event) {
+                                                    $event.preventDefault()
                                                     return _vm.removeIngredient(key)
                                                 }
                                             }
@@ -37927,7 +37953,15 @@
                 _vm._v(" "),
                 _c(
                     "button",
-                    {staticClass: "btn btn-success", on: {click: _vm.addIngredient}},
+                    {
+                        staticClass: "btn btn-success",
+                        on: {
+                            click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.addIngredient($event)
+                            }
+                        }
+                    },
                     [_vm._v("+")]
                 )
             ])
@@ -37987,29 +38021,7 @@
                         _vm._l(_vm.steps, function (step, key) {
                             return _c("tr", [
                                 _c("td", [
-                                    _vm._v(
-                                        "\n                " + _vm._s(key + 1) + "\n                "
-                                    ),
-                                    _c("input", {
-                                        directives: [
-                                            {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: step.index,
-                                                expression: "step.index"
-                                            }
-                                        ],
-                                        attrs: {type: "hidden", name: "steps[][order]"},
-                                        domProps: {value: step.index},
-                                        on: {
-                                            input: function ($event) {
-                                                if ($event.target.composing) {
-                                                    return
-                                                }
-                                                _vm.$set(step, "index", $event.target.value)
-                                            }
-                                        }
-                                    })
+                                    _vm._v("\n                " + _vm._s(key + 1) + "\n            ")
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
@@ -38025,10 +38037,10 @@
                                             ],
                                             staticClass: "form-control px-3 ",
                                             attrs: {
-                                                name: "steps[][instructions]",
                                                 cols: "48",
-                                                rows: "3",
-                                                required: ""
+                                                name: "steps[" + key + "][instruction]",
+                                                required: "",
+                                                rows: "3"
                                             },
                                             domProps: {value: step.instruction},
                                             on: {
@@ -38043,7 +38055,19 @@
                                     ])
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(1, true),
+                                _c("td", [
+                                    _c("label", [
+                                        _c("input", {
+                                            staticClass: "custom-file",
+                                            attrs: {
+                                                accept: "image/jpeg, image/jpg, image/png",
+                                                id: "steps[" + key + "][picture]",
+                                                name: "steps[" + key + "][picture]",
+                                                type: "file"
+                                            }
+                                        })
+                                    ])
+                                ]),
                                 _vm._v(" "),
                                 _c("td", [
                                     _c(
@@ -38052,6 +38076,7 @@
                                             staticClass: "btn btn-danger",
                                             on: {
                                                 click: function ($event) {
+                                                    $event.preventDefault()
                                                     return _vm.removeStep(key)
                                                 }
                                             }
@@ -38067,7 +38092,15 @@
                 _vm._v(" "),
                 _c(
                     "button",
-                    {staticClass: "btn btn-success", on: {click: _vm.addStep}},
+                    {
+                        staticClass: "btn btn-success",
+                        on: {
+                            click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.addStep($event)
+                            }
+                        }
+                    },
                     [_vm._v("+")]
                 )
             ])
@@ -38084,24 +38117,6 @@
                         _c("th", [_c("label", [_vm._v("Instrukcje")])]),
                         _vm._v(" "),
                         _c("th", [_c("label", [_vm._v("Zdjęcie")])])
-                    ])
-                ])
-            },
-            function () {
-                var _vm = this
-                var _h = _vm.$createElement
-                var _c = _vm._self._c || _h
-                return _c("td", [
-                    _c("label", [
-                        _c("input", {
-                            staticClass: "custom-file",
-                            attrs: {
-                                accept: "image/jpeg, image/jpg, image/png",
-                                name: "steps[][picture]",
-                                type: "file",
-                                id: "picture"
-                            }
-                        })
                     ])
                 ])
             }
@@ -49990,6 +50005,7 @@
             }
 
             /*  */
+
 
 
 // these keywords should not appear inside expressions, but operators like

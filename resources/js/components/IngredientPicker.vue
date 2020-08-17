@@ -13,33 +13,33 @@
             <tr v-for="(ingredient, key) in ingredients">
                 <td>
                     <label>
-                        <input class="form-control" min="1" name="ingredients[][quantity]"
+                        <input :name="`ingredients[${key}][quantity]`" class="form-control" min="1"
                                type="number" v-model="ingredient.quantity">
                     </label>
                 </td>
                 <td>
                     <label>
-                        <select class="form-control" name="ingredients[][unit]" v-model="ingredient.unitId">
+                        <select :name="`ingredients[${key}][unit]`" class="form-control" v-model="ingredient.unit">
                             <option :value="unit.id" v-for="unit in unitsList">{{unit.name}}</option>
                         </select>
                     </label>
                 </td>
                 <td>
                     <label>
-                        <select class="form-control" name="ingredients[][ingredient]"
-                                v-model="ingredient.ingredientId">
+                        <select :name="`ingredients[${key}][ingredient]`" class="form-control"
+                                v-model="ingredient.ingredient">
                             <option :value="ingredient.id" v-for="ingredient in ingredientsList">{{ingredient.name}}
                             </option>
                         </select>
                     </label>
                 </td>
                 <td>
-                    <button @click="removeIngredient(key)" class="btn btn-danger">-</button>
+                    <button @click.prevent="removeIngredient(key)" class="btn btn-danger">-</button>
                 </td>
             </tr>
             </tbody>
         </table>
-        <button @click="addIngredient" class="btn btn-success">+</button>
+        <button @click.prevent="addIngredient" class="btn btn-success">+</button>
     </div>
 </template>
 
@@ -48,22 +48,28 @@
         props: {
             ingredientsList: Array,
             unitsList: Array,
+            ingredientsOld: {
+                type: Array,
+                default: function () {
+                    return [{
+                        quantity: 0,
+                        ingredient: null,
+                        unit: null,
+                    }];
+                }
+            }
         },
         data() {
             return {
-                ingredients: [{
-                    quantity: 0,
-                    ingredientId: null,
-                    unitId: null,
-                }],
+                ingredients: this.ingredientsOld
             }
         },
         methods: {
             addIngredient() {
                 this.ingredients.push({
                     quantity: 0,
-                    ingredientId: null,
-                    unitId: null,
+                    ingredient: null,
+                    unit: null,
                 })
             },
             removeIngredient(key) {
