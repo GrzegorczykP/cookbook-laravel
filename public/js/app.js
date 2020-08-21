@@ -37817,8 +37817,8 @@
                                             ],
                                             staticClass: "form-control",
                                             attrs: {
-                                                min: "1",
                                                 name: "ingredients[" + key + "][quantity]",
+                                                min: "1",
                                                 type: "number"
                                             },
                                             domProps: {value: ingredient.quantity},
@@ -37848,7 +37848,9 @@
                                                     }
                                                 ],
                                                 staticClass: "form-control",
-                                                attrs: {name: "ingredients[" + key + "][unit]"},
+                                                attrs: {
+                                                    name: "ingredients[" + key + "][measure_unit_id]"
+                                                },
                                                 on: {
                                                     change: function ($event) {
                                                         var $$selectedVal = Array.prototype.filter
@@ -37893,7 +37895,7 @@
                                                     }
                                                 ],
                                                 staticClass: "form-control",
-                                                attrs: {name: "ingredients[" + key + "][ingredient]"},
+                                                attrs: {name: "ingredients[" + key + "][ingredient_id]"},
                                                 on: {
                                                     change: function ($event) {
                                                         var $$selectedVal = Array.prototype.filter
@@ -38060,9 +38062,9 @@
                                         _c("input", {
                                             staticClass: "custom-file",
                                             attrs: {
-                                                accept: "image/jpeg, image/jpg, image/png",
                                                 id: "steps[" + key + "][picture]",
                                                 name: "steps[" + key + "][picture]",
+                                                accept: "image/jpeg, image/jpg, image/png",
                                                 type: "file"
                                             }
                                         })

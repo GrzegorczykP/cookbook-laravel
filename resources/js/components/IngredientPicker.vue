@@ -19,14 +19,15 @@
                 </td>
                 <td>
                     <label>
-                        <select :name="`ingredients[${key}][unit]`" class="form-control" v-model="ingredient.unit">
+                        <select :name="`ingredients[${key}][measure_unit_id]`" class="form-control"
+                                v-model="ingredient.unit">
                             <option :value="unit.id" v-for="unit in unitsList">{{unit.name}}</option>
                         </select>
                     </label>
                 </td>
                 <td>
                     <label>
-                        <select :name="`ingredients[${key}][ingredient]`" class="form-control"
+                        <select :name="`ingredients[${key}][ingredient_id]`" class="form-control"
                                 v-model="ingredient.ingredient">
                             <option :value="ingredient.id" v-for="ingredient in ingredientsList">{{ingredient.name}}
                             </option>

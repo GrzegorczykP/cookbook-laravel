@@ -19,7 +19,7 @@ class RecipeStepsTable extends Migration
                 ->onDelete('cascade');
             $table->string('picture')
                 ->nullable();
-            $table->text('instructions');
+            $table->text('instruction');
             $table->unsignedTinyInteger('order');
             $table->timestamps();
         });

@@ -28,11 +28,11 @@
     <div>
         <h4>Przygotowanie</h4>
         <ul class="text-justify">
-            @foreach($recipe->steps as $step)
+            @foreach($recipe->recipeSteps as $step)
                 @if(!is_null($step->picture))
                     <img width="128" height="128" src="{{asset('storage/'.$step->picture)}}" alt="zzdjęcie">
                 @endif
-                <li>{{ $step->instructions }}</li>
+                <li>{{ $step->instruction }}</li>
             @endforeach
         </ul>
     </div>

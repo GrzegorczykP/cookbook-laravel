@@ -58,13 +58,14 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
+        $this->authorize('create', Recipe::class);
+
         $dictionary = 'recipes-pic';
         $uploadedFile = $request->file('picture');
         $uploadedFile = $uploadedFile != null
             ? $uploadedFile->store($dictionary, 'public')
             : null;
 
-        $this->authorize('create', Recipe::class);
         $recipe = Recipe::create(
             array_merge($request->validated(),
                 [
@@ -73,6 +74,14 @@ class RecipeController extends Controller
                 ]
             )
         );
+
+        $recipe->recipeIngredients()->createMany($request->validated()['ingredients']);
+        foreach ($request->validated()['steps'] as $key => $step) {
+            $recipe->recipeSteps()->create([
+                'instruction' => $step['instruction'],
+                'order' => $key
+            ]);
+        }
 
         return redirect(route('recipes.show', $recipe), 201);
     }

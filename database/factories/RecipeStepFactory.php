@@ -12,7 +12,7 @@ $factory->define(RecipeStep::class, function (Faker $faker) {
     static $order = 0;
     return [
         'recipe_id' => Recipe::all()->isNotEmpty() ? Recipe::all()->random() : factory(App\Recipe::class),
-        'instructions' => $faker->realText(),
+        'instruction' => $faker->realText(),
         'order' => $order++,
     ];
 });

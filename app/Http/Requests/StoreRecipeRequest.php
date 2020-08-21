@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Ingredient;
 use App\MeasureUnit;
+use App\Recipe;
 use App\RecipeCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -17,8 +18,6 @@ class StoreRecipeRequest extends FormRequest
      */
     public function authorize()
     {
-//        dd($this->request);
-
         return true;
     }
 
@@ -37,13 +36,13 @@ class StoreRecipeRequest extends FormRequest
             'prepare_time' => 'required|numeric|min:1|max:360',
             'difficulty' => 'required|in:easy,medium,hard',
             'serves' => 'required|numeric|min:1|max:16',
-            'steps' => 'array',
+            'steps' => 'required|array',
             'steps.*.instruction' => 'required|string',
             'steps.*.picture' => 'nullable|image',
-            'ingredients' => 'array',
+            'ingredients' => 'required|array',
             'ingredients.*.quantity' => 'required|numeric|min:1',
-            'ingredients.*.unit' => ['bail', 'required', Rule::in(MeasureUnit::all()->pluck('id'))],
-            'ingredients.*.ingredient' => ['bail', 'required', Rule::in(Ingredient::all()->pluck('id'))],
+            'ingredients.*.measure_unit_id' => ['bail', 'required', Rule::in(MeasureUnit::all()->pluck('id'))],
+            'ingredients.*.ingredient_id' => ['bail', 'required', Rule::in(Ingredient::all()->pluck('id'))],
         ];
     }
 
