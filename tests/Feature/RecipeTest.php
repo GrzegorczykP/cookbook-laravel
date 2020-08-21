@@ -101,12 +101,20 @@ class RecipeTest extends TestCase
         $user = $this->getUserByRoles('user');
 
         $recipe = $this->recipeData();
-        foreach ($recipe['steps'] as &$step) {
-            $file = UploadedFile::fake()->image('image.jpg')->size(1000);
+        foreach ($recipe['steps'] as $key => &$step) {
+            $file = UploadedFile::fake()->image('image'.$key.'.jpg')->size(1000);
             $step['picture'] = $file;
         }
-        dd($recipe);
+
         $this->actingAs($user)->post(route('recipes.store'), $recipe);
+
+        $newRecipe = Recipe::all()->sortByDesc('created_at')->first();
+        $this->assertDatabaseHas('recipe_steps', ['recipe_id' => $newRecipe->id]);
+        $recipeSteps = RecipeStep::whereRecipeId($newRecipe->id)->get();
+        foreach ($recipeSteps as $recipeStep) {
+            $this->assertNotNull($recipeStep['picture']);
+        }
+        $this->assertSameSize($recipeSteps->toArray(), $recipe['steps']);
     }
 
 

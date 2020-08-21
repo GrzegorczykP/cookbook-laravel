@@ -31,5 +31,5 @@ use Illuminate\Support\Carbon;
  */
 class RecipeStep extends Model
 {
-    protected $fillable = ['instruction', 'order'];
+    protected $fillable = ['instruction', 'order', 'picture'];
 }

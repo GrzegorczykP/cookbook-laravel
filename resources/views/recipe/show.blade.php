@@ -2,6 +2,9 @@
 
 @section('content')
     <h2>{{ $recipe->name }}</h2>
+    @if(!is_null($recipe->picture))
+        <img src="{{asset('storage/'.$recipe->picture)}}" alt="zdjęcie">
+    @endif
     <div class="row text-center p-3">
         <div class="col-4">
             <div>Porcje:</div>{{ $recipe->serves }}</div>
@@ -29,10 +32,10 @@
         <h4>Przygotowanie</h4>
         <ul class="text-justify">
             @foreach($recipe->recipeSteps as $step)
-                @if(!is_null($step->picture))
-                    <img width="128" height="128" src="{{asset('storage/'.$step->picture)}}" alt="zzdjęcie">
-                @endif
                 <li>{{ $step->instruction }}</li>
+                @if(!is_null($step->picture))
+                    <img width="256" height="256" src="{{asset('storage/'.$step->picture)}}" alt="zdjęcie">
+                @endif
             @endforeach
         </ul>
     </div>

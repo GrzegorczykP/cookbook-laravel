@@ -77,9 +77,16 @@ class RecipeController extends Controller
 
         $recipe->recipeIngredients()->createMany($request->validated()['ingredients']);
         foreach ($request->validated()['steps'] as $key => $step) {
+            $dictionary = 'recipe-steps-pic';
+            $uploadedFile = $request->file('steps.'.$key.'.picture');
+            $uploadedFile = $uploadedFile != null
+                ? $uploadedFile->store($dictionary, 'public')
+                : null;
+
             $recipe->recipeSteps()->create([
                 'instruction' => $step['instruction'],
-                'order' => $key
+                'order' => $key,
+                'picture' => $uploadedFile,
             ]);
         }
 
@@ -101,11 +108,14 @@ class RecipeController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Recipe $recipe
-     * @return Response
+     * @return Application|Factory|Response|View
+     * @throws AuthorizationException
      */
-    public function edit(Recipe $recipe): Response
+    public function edit(Recipe $recipe)
     {
-        //
+        $this->authorize('update', Recipe::class);
+
+        return view('recipe.create', compact('recipe'));
     }
 
     /**
