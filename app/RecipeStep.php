@@ -31,5 +31,12 @@ use Illuminate\Support\Carbon;
  */
 class RecipeStep extends Model
 {
-    protected $fillable = ['instruction', 'order', 'picture'];
+    protected $fillable = [
+        'instruction', 'order', 'picture'
+    ];
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class);
+    }
 }

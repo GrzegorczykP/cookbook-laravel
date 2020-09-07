@@ -16,11 +16,11 @@
                 </td>
                 <td>
                     <label><textarea class="form-control px-3 " cols="48"
-                                     :name="`steps[${key}][instruction]`" required rows="3"
+                                     :name="`recipe_steps[${key}][instruction]`" required rows="3"
                                      v-model="step.instruction"></textarea></label>
                 </td>
                 <td>
-                    <label><input :id="`steps[${key}][picture]`" :name="`steps[${key}][picture]`"
+                    <label><input :id="`recipe_steps[${key}][picture]`" :name="`recipe_steps[${key}][picture]`"
                                   accept="image/jpeg, image/jpg, image/png" class="custom-file" type="file"></label>
                 </td>
                 <td>

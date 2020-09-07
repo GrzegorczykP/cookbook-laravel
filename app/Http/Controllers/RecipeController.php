@@ -67,7 +67,7 @@ class RecipeController extends Controller
             : null;
 
         $recipe = Recipe::create(
-            array_merge($request->validated(),
+            array_merge($request::validated(),
                 [
                     'user_id' => auth()->user()->id,
                     'picture' => $uploadedFile,
@@ -75,10 +75,10 @@ class RecipeController extends Controller
             )
         );
 
-        $recipe->recipeIngredients()->createMany($request->validated()['ingredients']);
-        foreach ($request->validated()['steps'] as $key => $step) {
+        $recipe->recipeIngredients()->createMany($request->validated()['recipe_ingredients']);
+        foreach ($request->validated()['recipe_steps'] as $key => $step) {
             $dictionary = 'recipe-steps-pic';
-            $uploadedFile = $request->file('steps.'.$key.'.picture');
+            $uploadedFile = $request->file('recipe_steps.'.$key.'.picture');
             $uploadedFile = $uploadedFile != null
                 ? $uploadedFile->store($dictionary, 'public')
                 : null;
@@ -113,7 +113,7 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        $this->authorize('update', Recipe::class);
+        $this->authorize('update', $recipe);
 
         return view('recipe.create', compact('recipe'));
     }
@@ -121,13 +121,18 @@ class RecipeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param StoreRecipeRequest $request
      * @param Recipe $recipe
-     * @return Response
+     * @return Application|RedirectResponse|Response|Redirector
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Recipe $recipe): Response
+    public function update(StoreRecipeRequest $request, Recipe $recipe)
     {
-        //
+        $this->authorize('update', $recipe);
+
+        $recipe->update($request->validated());
+
+        return redirect(route('recipes.show', $recipe), 204);
     }
 
     /**
@@ -135,6 +140,8 @@ class RecipeController extends Controller
      *
      * @param Recipe $recipe
      * @return RedirectResponse|Response
+     * @throws AuthorizationException
+     * @throws \Exception
      */
     public function destroy(Recipe $recipe)
     {

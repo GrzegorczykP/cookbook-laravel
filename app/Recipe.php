@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +41,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Recipe whereUpdatedAt($value)
  * @method static Builder|Recipe whereUserId($value)
  * @method static Builder|Recipe whereVerified($value)
- * @mixin Eloquent
  * @property-read Collection|RecipeStep[] $recipeSteps
  * @property-read int|null $recipe_steps_count
  */
@@ -56,6 +54,16 @@ class Recipe extends Model
 
     protected $fillable = [
         'name', 'description', 'picture', 'prepare_time', 'difficulty', 'serves', 'recipe_category_id', 'user_id'
+    ];
+
+    protected $guarded = [
+        'recipe_steps',
+        'recipe_instructions'
+    ];
+
+    protected $with = [
+        'recipeSteps',
+        'recipeIngredients'
     ];
 
     public function recipeSteps()

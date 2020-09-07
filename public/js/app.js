@@ -37632,7 +37632,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   attrs: {
-                    name: "ingredients[" + key + "][quantity]",
+                    name: "recipe_ingredients[" + key + "][quantity]",
                     min: "1",
                     type: "number"
                   },
@@ -37664,7 +37664,7 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     attrs: {
-                      name: "ingredients[" + key + "][measure_unit_id]"
+                      name: "recipe_ingredients[" + key + "][measure_unit_id]"
                     },
                     on: {
                       change: function($event) {
@@ -37710,7 +37710,9 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { name: "ingredients[" + key + "][ingredient_id]" },
+                    attrs: {
+                      name: "recipe_ingredients[" + key + "][ingredient_id]"
+                    },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -37848,7 +37850,7 @@ var render = function() {
                   staticClass: "form-control px-3 ",
                   attrs: {
                     cols: "48",
-                    name: "steps[" + key + "][instruction]",
+                    name: "recipe_steps[" + key + "][instruction]",
                     required: "",
                     rows: "3"
                   },
@@ -37870,8 +37872,8 @@ var render = function() {
                 _c("input", {
                   staticClass: "custom-file",
                   attrs: {
-                    id: "steps[" + key + "][picture]",
-                    name: "steps[" + key + "][picture]",
+                    id: "recipe_steps[" + key + "][picture]",
+                    name: "recipe_steps[" + key + "][picture]",
                     accept: "image/jpeg, image/jpg, image/png",
                     type: "file"
                   }

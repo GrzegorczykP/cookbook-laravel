@@ -13,13 +13,13 @@
             <tr v-for="(ingredient, key) in ingredients">
                 <td>
                     <label>
-                        <input :name="`ingredients[${key}][quantity]`" class="form-control" min="1"
+                        <input :name="`recipe_ingredients[${key}][quantity]`" class="form-control" min="1"
                                type="number" v-model="ingredient.quantity">
                     </label>
                 </td>
                 <td>
                     <label>
-                        <select :name="`ingredients[${key}][measure_unit_id]`" class="form-control"
+                        <select :name="`recipe_ingredients[${key}][measure_unit_id]`" class="form-control"
                                 v-model="ingredient.unit">
                             <option :value="unit.id" v-for="unit in unitsList">{{unit.name}}</option>
                         </select>
@@ -27,7 +27,7 @@
                 </td>
                 <td>
                     <label>
-                        <select :name="`ingredients[${key}][ingredient_id]`" class="form-control"
+                        <select :name="`recipe_ingredients[${key}][ingredient_id]`" class="form-control"
                                 v-model="ingredient.ingredient">
                             <option :value="ingredient.id" v-for="ingredient in ingredientsList">{{ingredient.name}}
                             </option>

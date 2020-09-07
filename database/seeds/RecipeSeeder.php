@@ -14,7 +14,7 @@ class RecipeSeeder extends Seeder
     {
         factory(Recipe::class, 10)->create()->each(function ($recipe) {
             for ($i = 0; $i < rand(1, 10); $i++) {
-                $recipe->steps()->create(
+                $recipe->recipeSteps()->create(
                     factory(App\RecipeStep::class)->make(['order' => $i])->toArray()
                 );
             }

@@ -19,7 +19,7 @@
             <h4>Składniki</h4>
             <ul>
                 @foreach($recipe->recipeIngredients as $ingredient)
-                    <li>{{ $ingredient->quantity . $ingredient->measure_unit->name . ' ' . $ingredient->ingredient->name }}</li>
+                    <li>{{ $ingredient->quantity . $ingredient->measureUnit->name . ' ' . $ingredient->ingredient->name }}</li>
                 @endforeach
             </ul>
         </div>

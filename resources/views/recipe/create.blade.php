@@ -81,8 +81,8 @@
                     @enderror
                     <ingredient-picker :ingredients-list='{{\App\Ingredient::all()}}'
                                        :units-list='{{\App\MeasureUnit::all()}}'
-                                       @if (old('ingredients'))
-                                       :ingredients-old="{{collect(old('ingredients'))}}"@endif>
+                                       @if (old('recipe_ingredients'))
+                                       :ingredients-old="{{collect(old('recipe_ingredients'))}}"@endif>
                     </ingredient-picker>
                 </div>
             </div>
@@ -91,8 +91,8 @@
                     @error('steps.*')
                     <p class=" alert alert-danger">{{ $message }}</p>
                     @enderror
-                    <step-editor @if (old('steps'))
-                                 :steps-old="{{collect(old('steps'))}}"@endif>
+                    <step-editor @if (old('recipe_steps'))
+                                 :steps-old="{{collect(old('recipe_steps'))}}"@endif>
                     </step-editor>
                 </div>
             </div>

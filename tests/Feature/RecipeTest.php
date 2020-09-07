@@ -7,7 +7,7 @@ use App\Recipe;
 use App\RecipeIngredient;
 use App\RecipeStep;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Faker\Factory;
 use Illuminate\Http\UploadedFile;
 use Storage;
 use Tests\TestCase;
@@ -19,15 +19,11 @@ use Tests\TestCase;
 class RecipeTest extends TestCase
 {
     /**
-     * A basic test example.
      *
-     * @return void
      */
     public function testCanAddRecipeByUser()
     {
         $user = $this->getUserByRoles('user');
-
-        $this->withoutExceptionHandling();
 
         $recipe = $this->recipeData();
         $response = $this->actingAs($user)->post(route('recipes.store'), $recipe);
@@ -80,9 +76,12 @@ class RecipeTest extends TestCase
         $newRecipe = Recipe::all()->sortByDesc('created_at')->first();
         $this->assertDatabaseHas('recipe_ingredients', ['recipe_id' => $newRecipe->id]);
         $addedIngredients = RecipeIngredient::whereRecipeId($newRecipe->id)->get()->toArray();
-        $this->assertSameSize($addedIngredients, $recipe['ingredients']);
+        $this->assertSameSize($addedIngredients, $recipe['recipe_ingredients']);
     }
 
+    /**
+     *
+     */
     public function testStepsAreAddedToRecipe()
     {
         $user = $this->getUserByRoles('user');
@@ -93,16 +92,19 @@ class RecipeTest extends TestCase
         $newRecipe = Recipe::all()->sortByDesc('created_at')->first();
         $this->assertDatabaseHas('recipe_steps', ['recipe_id' => $newRecipe->id]);
         $addedSteps = RecipeStep::whereRecipeId($newRecipe->id)->get()->toArray();
-        $this->assertSameSize($addedSteps, $recipe['steps']);
+        $this->assertSameSize($addedSteps, $recipe['recipe_steps']);
     }
 
+    /**
+     *
+     */
     public function testPictureToStepCanBeAdded()
     {
         $user = $this->getUserByRoles('user');
 
         $recipe = $this->recipeData();
-        foreach ($recipe['steps'] as $key => &$step) {
-            $file = UploadedFile::fake()->image('image'.$key.'.jpg')->size(1000);
+        foreach ($recipe['recipe_steps'] as $key => &$step) {
+            $file = UploadedFile::fake()->image('image' . $key . '.jpg')->size(1000);
             $step['picture'] = $file;
         }
 
@@ -114,7 +116,30 @@ class RecipeTest extends TestCase
         foreach ($recipeSteps as $recipeStep) {
             $this->assertNotNull($recipeStep['picture']);
         }
-        $this->assertSameSize($recipeSteps->toArray(), $recipe['steps']);
+        $this->assertSameSize($recipeSteps->toArray(), $recipe['recipe_steps']);
+    }
+
+    /**
+     *
+     */
+    public function testModeratorCanUpdateRecipe()
+    {
+        $faker = Factory::create();
+
+        $moderator = $this->getUserByRoles('moderator');
+        $recipe = Recipe::all();
+        $recipe = $recipe->count() > 0
+            ? $recipe->random()
+            : factory(Recipe::class)->create();
+
+        $this->actingAs($moderator)->get(route('recipes.edit', $recipe))->assertOk();
+
+        $updatedRecipe = clone $recipe;
+        $updatedRecipe->name = $faker->word;
+
+        $response = $this->actingAs($moderator)->patch(route('recipes.update', $recipe), $updatedRecipe->toArray());
+        $response->assertStatus(204);
+        $this->assertEquals($updatedRecipe->name, Recipe::find($recipe->id)->name);
     }
 
 
@@ -134,15 +159,18 @@ class RecipeTest extends TestCase
         return $user;
     }
 
+    /**
+     * @return array
+     */
     private function recipeData(): array
     {
         $recipe = factory(Recipe::class)->make()->toArray();
         unset($recipe['user_id'], $recipe['verified']);
-        $recipe['ingredients'] = factory(RecipeIngredient::class, rand(1, 6))->make()
+        $recipe['recipe_ingredients'] = factory(RecipeIngredient::class, rand(1, 6))->make()
             ->map(function ($value) {
                 return $value->only('quantity', 'measure_unit_id', 'ingredient_id');
             })->toArray();
-        $recipe['steps'] = factory(RecipeStep::class, rand(2, 8))->make()
+        $recipe['recipe_steps'] = factory(RecipeStep::class, rand(2, 8))->make()
             ->map(function ($value) {
                 return $value->only('instruction');
             })->toArray();

@@ -33,14 +33,14 @@ class RecipeIngredient extends Model
 {
     protected $fillable = ['ingredient_id', 'measure_unit_id', 'quantity'];
 
-    protected $with = ['ingredient', 'measure_unit'];
+    protected $with = ['ingredient', 'measureUnit'];
 
     public function ingredient()
     {
         return $this->belongsTo(Ingredient::class);
     }
 
-    public function measure_unit()
+    public function measureUnit()
     {
         return $this->belongsTo(MeasureUnit::class);
     }
